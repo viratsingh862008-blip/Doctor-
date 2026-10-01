@@ -1,0 +1,1 @@
+export const clinic={name:'Skin Care Centre (Dr. Mugdha Mohan)',doctor:'Dr. Mugdha Mohan',qualification:'MBBS, MD (Dermatology, Venereology & Leprosy)',address:'West of Kotwali Chowk, Hospital Road, Kali Bagh Colony, Bettiah, Bihar 845438',phone:'+91 92170 02598',rating:4.8,reviews:176};
