@@ -9,6 +9,9 @@ describe('server integrations',()=>{
   it('keeps the appointment route server imports resolvable from app/api/appointment',async()=>{
     const route=await import('../app/api/appointment/route');
     expect(typeof route.POST).toBe('function');
+    const condition=await import('../app/conditions/[slug]/page');
+    expect(typeof condition.default).toBe('function');
+    expect(typeof condition.generateStaticParams).toBe('function');
   });
   it('does not require production secrets just to import the module',()=>{
     expect(typeof getSupabaseAdmin).toBe('function');
