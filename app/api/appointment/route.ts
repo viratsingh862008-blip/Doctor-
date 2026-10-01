@@ -1,7 +1,7 @@
 import {NextResponse} from 'next/server';
-import {appointmentSchema} from '@/lib/appointment-schema';
-import {getSupabaseAdmin,getResend} from '@/lib/server-clients';
-import {appointmentEmailHtml} from '@/lib/email';
+import {appointmentSchema} from '../../lib/appointment-schema';
+import {getSupabaseAdmin,getResend} from '../../lib/server-clients';
+import {appointmentEmailHtml} from '../../lib/email';
 
 export async function POST(request:Request){
   try{
