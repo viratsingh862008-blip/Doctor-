@@ -6,6 +6,10 @@ const original={...process.env};
 afterEach(()=>{process.env={...original}});
 
 describe('server integrations',()=>{
+  it('keeps the appointment route server imports resolvable from app/api/appointment',async()=>{
+    const route=await import('../app/api/appointment/route');
+    expect(typeof route.POST).toBe('function');
+  });
   it('does not require production secrets just to import the module',()=>{
     expect(typeof getSupabaseAdmin).toBe('function');
     expect(typeof getResend).toBe('function');
