@@ -1,8 +1,10 @@
 import {NextResponse} from 'next/server';
 import {appointmentSchema} from '../../../lib/appointment-schema';
 import {getSupabaseAdmin,getResend} from '../../../lib/server-clients';
-import {appointmentEmailHtml} from '../../../lib/email';
+import {appointmentEmailHtml,appointmentEmailSubject,appointmentEmailText} from '../../../lib/email';
 import {buildWhatsAppUrl} from '../../../lib/contact';
+
+const clinicNotificationEmail=process.env.CLINIC_NOTIFICATION_EMAIL||'easypzbuisness@gmail.com';
 
 export async function POST(request:Request){
   try{
@@ -20,15 +22,14 @@ export async function POST(request:Request){
     if(dbError||!row)return NextResponse.json({error:{code:'DATABASE_ERROR',message:'We could not save your enquiry. Please use WhatsApp instead.'}},{status:500});
 
     let emailSent=false;
-    const notificationEmail=process.env.CLINIC_NOTIFICATION_EMAIL;
     const from=process.env.RESEND_FROM_EMAIL;
-    if(notificationEmail&&from){
+    if(clinicNotificationEmail&&from){
       const {error:emailError}=await getResend().emails.send({
         from,
-        to:[notificationEmail],
-        subject:'New dermatology consultation enquiry',
+        to:[clinicNotificationEmail],
+        subject:appointmentEmailSubject(name),
         html:appointmentEmailHtml({name,phone,concern,preferredDate}),
-        text:[`New consultation enquiry`,`Name: ${name}`,`Phone: ${phone}`,`Concern: ${concern}`,`Preferred date: ${preferredDate||'Not specified'}`].join('\\n')
+        text:appointmentEmailText({name,phone,concern,preferredDate})
       });
       emailSent=!emailError;
       await supabaseAdmin.from('appointment_enquiries').update({email_sent:emailSent,updated_at:new Date().toISOString()}).eq('id',row.id);
