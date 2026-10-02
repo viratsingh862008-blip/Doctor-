@@ -36,3 +36,8 @@ npm run dev
 ## Production handoff
 
 Public source material was researched for the demo. Confirm clinic-owned image rights, exact clinic hours, phone number, social handles and final medical copy with Dr. Mugdha Mohan before launch. Replace third-party imagery with clinic-owned originals when available.
+
+
+## Consultation flow
+
+Consultation enquiries are prepared in the browser and handed directly to the clinic's WhatsApp number. The site does not submit consultation data through an email, Gmail, Resend, or server-side appointment API.
