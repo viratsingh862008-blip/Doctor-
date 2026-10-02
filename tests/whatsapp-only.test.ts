@@ -27,6 +27,6 @@ describe('consultation flow is WhatsApp-only',()=>{
   it('uses the faster scroll-reveal timing contract',()=>{
     const page=readFileSync(new URL('../app/page.tsx',import.meta.url),'utf8');
     expect(page).toContain('SCROLL_REVEAL_DURATION=.58');
-    expect(page).toContain("start:'top 88%'");
+    expect(page).toContain('start:SCROLL_REVEAL_START');
   });
 });
