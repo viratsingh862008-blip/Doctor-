@@ -472,3 +472,213 @@ body:before{
   html{scroll-behavior:auto}
   *,*:before,*:after{animation:none!important;transition:none!important}
 }
+
+/* ===== Mobile-first refinement v3 ===== */
+.brand{min-width:0;gap:9px}
+.brand>span:last-child{letter-spacing:-.045em}
+.brand-avatar{
+  width:34px;height:34px;min-width:34px;
+  display:block;overflow:hidden;border-radius:50%;
+  border:1px solid rgba(20,34,29,.16);
+  background:#dce7df;
+  box-shadow:0 4px 12px rgba(20,34,29,.08);
+}
+.brand-avatar img{width:100%;height:100%;object-fit:cover;object-position:center top}
+.mobile{z-index:100}
+.mobile a,.mobile button{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.mobile button{border:0;background:var(--ink);color:#fff;border-radius:12px;padding:13px;font-size:10px;font-weight:800}
+.mobile-bottom-cta{
+  grid-template-columns:48px 1fr 50px;
+}
+.mobile-home{
+  display:flex!important;
+  align-items:center;
+  justify-content:center;
+  border-radius:12px;
+  background:#e7ece7;
+}
+.brand-avatar.mini{width:28px;height:28px;min-width:28px;border-color:transparent}
+@media(max-width:620px){
+  .topline{display:none}
+  .nav{
+    height:64px;
+    padding:0 15px;
+    border-bottom:1px solid rgba(217,224,218,.75);
+  }
+  .nav .brand{font-size:12px}
+  .brand-avatar{width:31px;height:31px;min-width:31px}
+  .nav-right{gap:5px}
+  .menu{width:40px;height:40px;display:grid;place-items:center;border-radius:12px;background:#e9eee9}
+  .mobile{
+    top:64px;
+    left:10px;
+    right:10px;
+    padding:8px;
+    border-radius:18px;
+    background:rgba(250,251,248,.97);
+    box-shadow:0 24px 60px rgba(20,34,29,.18);
+  }
+  .mobile a{
+    min-height:47px;
+    padding:12px 10px;
+    border-bottom:1px solid #e4e9e4;
+    font-size:10px;
+  }
+  .mobile button{margin-top:8px;min-height:45px;justify-content:center}
+  .hero{
+    min-height:auto;
+    padding:27px 17px 48px;
+    gap:27px;
+  }
+  .hero-copy{order:1}
+  .hero-art{order:2;width:100%;max-width:none}
+  .eyebrow{margin-bottom:14px;font-size:8px}
+  .hero-kicker{font-size:10px;margin-bottom:7px}
+  .hero h1{
+    font-size:clamp(48px,14vw,62px);
+    line-height:.9;
+    letter-spacing:-.075em;
+    max-width:390px;
+  }
+  .hero-copy>p{
+    margin-top:21px;
+    font-size:12px;
+    line-height:1.8;
+  }
+  .hero .actions{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:9px;
+    margin-top:22px;
+  }
+  .hero .btn{width:100%;min-height:48px}
+  .hero .link{justify-content:center;padding:8px 0}
+  .proof{margin-top:28px!important;gap:12px!important}
+  .proof>div b{font-size:18px}
+  .proof small{font-size:6.5px}
+  .hero-note{
+    margin-top:18px!important;
+    font-size:8px!important;
+    line-height:1.5;
+  }
+  .hero-art:before{display:none}
+  .portrait{
+    aspect-ratio:1 / 1.18;
+    border-radius:0 0 34px 34px;
+    box-shadow:0 18px 50px rgba(20,34,29,.14);
+  }
+  .portrait:after{inset:12px}
+  .caption{left:19px;bottom:18px}
+  .caption strong{font-size:22px}
+  .floating-card{
+    left:12px;
+    bottom:-15px;
+    transform:none;
+    padding:10px 12px;
+    border-radius:12px;
+    font-size:8px;
+  }
+  .ribbon{
+    padding:11px 0;
+    font-size:7px;
+  }
+  .signal-band{padding:17px 0}
+  .signal-band>div{padding:0 17px;gap:5px}
+  .signal-band span{font-size:7px}
+  .signal-band p{font-size:10px;line-height:1.5}
+  .section{padding:64px 17px}
+  .section-topline{padding-top:11px}
+  .section-topline span:last-child{display:none}
+  .intro{padding-top:64px}
+  .intro .kicker{font-size:8px}
+  .two{margin-top:28px!important;gap:24px!important}
+  .section h2{font-size:39px;line-height:.98}
+  .two p,.care .head>p,.procedure>div>p,.research-main p{font-size:11px;line-height:1.8}
+  .principles{margin-top:38px}
+  .principle{min-height:0;padding:19px 0 21px}
+  .principle h3{font-size:16px;margin:22px 0 5px}
+  .principle p{font-size:10px}
+  .care{padding-top:52px}
+  .care .head{margin:27px 0 27px}
+  .care .head h2{font-size:39px}
+  .grid{display:block;border-top:1px solid var(--line)}
+  .card{
+    min-height:0;
+    padding:22px 0;
+    border-bottom:1px solid var(--line);
+    border-right:0!important;
+  }
+  .card small{font-size:7px}
+  .card h3{font-size:18px;margin:14px 0 6px}
+  .card p{font-size:10px;margin:0;max-width:320px}
+  .card-actions{margin-top:17px}
+  .card-actions a{font-size:8px}
+  .quote{padding:70px 17px}
+  .quote p{font-size:32px}
+  .procedure{
+    display:flex;
+    flex-direction:column;
+    gap:27px;
+    padding-top:57px;
+  }
+  .procedure>.wide-img{order:1;width:100%;height:300px}
+  .procedure>div:last-child{order:2}
+  .procedure h2{font-size:39px}
+  .procedure-list{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:0;
+    margin:22px 0;
+  }
+  .procedure-list span{font-size:8px;padding:10px 6px 10px 0;border-bottom:1px solid var(--line)}
+  .procedure-list span:nth-child(odd){border-right:1px solid var(--line);padding-right:8px}
+  .procedure-list span:nth-child(even){padding-left:8px}
+  .procedure .btn{width:100%}
+  .research{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    padding-top:52px;
+  }
+  .research-main{padding:25px 20px;min-height:0}
+  .research-main h2{font-size:39px;margin-top:30px}
+  .research-aside{min-height:220px;padding:25px 20px}
+  .research-aside>b{font-size:64px}
+  .research-aside p{font-size:14px}
+  .reviews{padding-top:64px}
+  .review-head{margin:27px 0 25px}
+  .review-head h2{font-size:39px}
+  .score b{font-size:46px}
+  .review-grid{display:block}
+  .review-grid article{
+    min-height:0;
+    margin-bottom:8px;
+    padding:21px;
+  }
+  .review-grid article p{font-size:15px;margin:22px 0}
+  .clinic{
+    display:flex;
+    flex-direction:column;
+    gap:27px;
+    padding-top:65px;
+  }
+  .clinic>div:nth-child(2){order:1}
+  .clinic>.gallery{order:2}
+  .clinic h2{font-size:39px}
+  .details{margin-top:24px}
+  .details>div{font-size:10px;padding:12px 0}
+  .clinic .actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .clinic .btn{width:100%;padding:12px 10px}
+  .gallery{height:285px}
+  .final .section{padding:62px 17px 78px}
+  .final h2{font-size:51px;line-height:.92;margin:39px 0 20px}
+  .final .btn{width:100%}
+  .footer-top{padding:42px 17px 30px}
+  .footer-bottom{padding:15px 17px 90px}
+  .modal{padding:27px 19px;border-radius:20px}
+  .modal h2{font-size:31px}
+  .backdrop{padding:10px}
+}
+@media(min-width:621px){
+  .brand-avatar{width:34px;height:34px}
+}
