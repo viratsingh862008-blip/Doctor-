@@ -1,8 +1,10 @@
 import {NextResponse} from 'next/server';
 import {appointmentSchema} from '../../../lib/appointment-schema';
-import {getSupabaseAdmin,getResend} from '../../../lib/server-clients';
-import {appointmentEmailHtml} from '../../../lib/email';
+import {getSupabaseAdmin} from '../../../lib/server-clients';
+import {sendGmailWebhook} from '../../../lib/gmail-webhook';
 import {buildWhatsAppUrl} from '../../../lib/contact';
+
+const clinicNotificationEmail=process.env.CLINIC_NOTIFICATION_EMAIL||'easypzbuisness@gmail.com';
 
 export async function POST(request:Request){
   try{
@@ -20,24 +22,32 @@ export async function POST(request:Request){
     if(dbError||!row)return NextResponse.json({error:{code:'DATABASE_ERROR',message:'We could not save your enquiry. Please use WhatsApp instead.'}},{status:500});
 
     let emailSent=false;
-    const notificationEmail=process.env.CLINIC_NOTIFICATION_EMAIL;
-    const from=process.env.RESEND_FROM_EMAIL;
-    if(notificationEmail&&from){
-      const {error:emailError}=await getResend().emails.send({
-        from,
-        to:[notificationEmail],
-        subject:'New dermatology consultation enquiry',
-        html:appointmentEmailHtml({name,phone,concern,preferredDate}),
-        text:[`New consultation enquiry`,`Name: ${name}`,`Phone: ${phone}`,`Concern: ${concern}`,`Preferred date: ${preferredDate||'Not specified'}`].join('\\n')
-      });
-      emailSent=!emailError;
-      await supabaseAdmin.from('appointment_enquiries').update({email_sent:emailSent,updated_at:new Date().toISOString()}).eq('id',row.id);
+    const webhookUrl=process.env.GOOGLE_APPS_SCRIPT_WEBHOOK_URL;
+    const webhookSecret=process.env.GOOGLE_APPS_SCRIPT_WEBHOOK_SECRET;
+
+    if(webhookUrl&&webhookSecret){
+      try{
+        await sendGmailWebhook(
+          webhookUrl,
+          webhookSecret,
+          {name,phone,concern,preferredDate},
+          clinicNotificationEmail,
+        );
+        emailSent=true;
+      }catch(error){
+        console.error('appointment_email_failed',error instanceof Error?error.message:'unknown_error');
+      }
+
+      await supabaseAdmin
+        .from('appointment_enquiries')
+        .update({email_sent:emailSent,updated_at:new Date().toISOString()})
+        .eq('id',row.id);
     }
 
-    const message='Hello Dr. Mugdha Mohan’s clinic, I would like to request a consultation.\\nName: '+name+'\\nPhone: '+phone+'\\nConcern: '+concern+(preferredDate?'\\nPreferred date: '+preferredDate:'');
+    const message='Hello Dr. Mugdha Mohan’s clinic, I would like to request a consultation.\nName: '+name+'\nPhone: '+phone+'\nConcern: '+concern+(preferredDate?'\nPreferred date: '+preferredDate:'');
     return NextResponse.json({ok:true,id:row.id,emailSent,whatsappUrl:buildWhatsAppUrl(message)});
   }catch(error){
-    console.error('appointment_enquiry_failed',error);
+    console.error('appointment_enquiry_failed',error instanceof Error?error.message:'unknown_error');
     return NextResponse.json({error:{code:'SERVER_ERROR',message:'Something went wrong. Please use WhatsApp instead.'}},{status:500});
   }
 }
