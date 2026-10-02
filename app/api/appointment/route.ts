@@ -2,6 +2,7 @@ import {NextResponse} from 'next/server';
 import {appointmentSchema} from '../../../lib/appointment-schema';
 import {getSupabaseAdmin,getResend} from '../../../lib/server-clients';
 import {appointmentEmailHtml} from '../../../lib/email';
+import {buildWhatsAppUrl} from '../../../lib/contact';
 
 export async function POST(request:Request){
   try{
@@ -34,7 +35,7 @@ export async function POST(request:Request){
     }
 
     const message='Hello Dr. Mugdha Mohan’s clinic, I would like to request a consultation.\\nName: '+name+'\\nPhone: '+phone+'\\nConcern: '+concern+(preferredDate?'\\nPreferred date: '+preferredDate:'');
-    return NextResponse.json({ok:true,id:row.id,emailSent,whatsappUrl:'https://wa.me/919217002598?text='+encodeURIComponent(message)});
+    return NextResponse.json({ok:true,id:row.id,emailSent,whatsappUrl:buildWhatsAppUrl(message)});
   }catch(error){
     console.error('appointment_enquiry_failed',error);
     return NextResponse.json({error:{code:'SERVER_ERROR',message:'Something went wrong. Please use WhatsApp instead.'}},{status:500});
