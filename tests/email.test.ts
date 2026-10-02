@@ -7,7 +7,7 @@ describe('appointment enquiry email templates',()=>{
   it('renders a professional branded HTML enquiry email with escaped patient data',()=>{
     const html=appointmentEmailHtml({...enquiry,name:'Aarav <script>'});
     expect(html).toContain('Dr. Mugdha Mohan');
-    expect(html).toContain('New Consultation Enquiry');
+    expect(html).toContain('New consultation enquiry');
     expect(html).toContain('Aarav &lt;script&gt;');
     expect(html).toContain('Acne &amp; acne scars');
     expect(html).toContain('2026-10-08');
