@@ -21,7 +21,7 @@ describe('consultation flow is WhatsApp-only',()=>{
     expect(page).not.toContain('/api/appointment');
     expect(page).not.toContain('emailSent');
     expect(page).not.toContain('Gmail');
-    expect(page).toContain('window.location.assign(whatsappUrl)');
+    expect(page).toContain('window.location.href=whatsappUrl');
   });
 
   it('uses the faster scroll-reveal timing contract',()=>{
